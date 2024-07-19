@@ -1,10 +1,9 @@
-import Catalog from "../../features/Catalog/Catalog";
 import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Header from "./Header";
-import { useState } from "react";
-
-
-
+import React, { useState } from 'react';
+import Catalog from "../../features/Catalog/Catalog";
+import { Outlet } from "react-router-dom";
+export const ApiContext = React.createContext({});
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const paletteType = darkMode ? 'dark': 'light';
@@ -17,6 +16,7 @@ function App() {
   function handleThemeChange(){
     setDarkMode(!darkMode);
   }
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -24,7 +24,7 @@ function App() {
       <CssBaseline />
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange}/>
       <Container>
-        <Catalog />
+        <Outlet />
       </Container>
     </ThemeProvider>
   );
