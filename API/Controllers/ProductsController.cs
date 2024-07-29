@@ -6,7 +6,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class ProductsController : ControllerBase
+	public class ProductsController : BaseApiController
 	{
 		private readonly StoreContext _storeContext;
 		public ProductsController(StoreContext storeContext)
@@ -23,6 +23,7 @@ namespace API.Controllers
 		public async Task<IActionResult> GetProduct(int id)
 		{
 			var product =await _storeContext.Products.FindAsync(id);
+			if(product==null) return NotFound();
 			return Ok(product);
 		}
 	}
