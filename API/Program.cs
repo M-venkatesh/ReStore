@@ -15,7 +15,6 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
-
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
@@ -28,7 +27,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(opt => {
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
 
 app.UseHttpsRedirection();
@@ -46,7 +45,7 @@ try{
     DbInitializer.initialize(context);
 }
 catch(Exception ex){
-    logger.LogError(ex,"An Error Occurred durin Migration");
+    logger.LogError(ex,"An Error Occurred during Migration");
 }
 
 app.Run();

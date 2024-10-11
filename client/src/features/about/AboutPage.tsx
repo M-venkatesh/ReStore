@@ -25,6 +25,7 @@ export default function AboutPage(){
             {validationErrors.length>0 &&
                 <Alert severity="error">
                     <AlertTitle>Validation Errors</AlertTitle>
+                    {validationErrors}
                     <List>
                         {validationErrors.map(error=>(
                             <ListItem key={error}>
