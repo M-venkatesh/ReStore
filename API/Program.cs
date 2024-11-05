@@ -1,5 +1,7 @@
 using API.Data;
 using API.Middleware;
+using API.Repository;
+using API.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +12,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<StoreContext>(opt =>
+//builder.Services.AddDbContext<StoreContext>(opt =>
+//{
+//    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
+builder.Services.AddTransient<StoreContext, StoreContext>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+
+builder.Services.AddDbContext<StoreContext>(options =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
 var app = builder.Build();
